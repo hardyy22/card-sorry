@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Special Message for Monika ❤️</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Poppins, Dancing Script & Caveat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Tone.js for soft background melody and sound effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .font-handwriting {
+      font-family: 'Caveat', cursive;
+    }
+    .font-script {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    /* Floating Heart Elements */
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 5s linear infinite;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(105vh) scale(0.6) rotate(0deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.1) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Tear drops animation */
+    @keyframes cryTears {
+      0% { transform: translateY(0) scale(0.4); opacity: 0; }
+      50% { opacity: 0.9; }
+      100% { transform: translateY(55px) scale(1.1); opacity: 0; }
+    }
+    .tear-drop-left {
+      animation: cryTears 1.2s infinite ease-in;
+    }
+    .tear-drop-right {
+      animation: cryTears 1.2s infinite 0.6s ease-in;
+    }
+
+    /* Subtle breathe/bounce animations */
+    @keyframes gentleBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-gentle {
+      animation: gentleBounce 2.8s ease-in-out infinite;
+    }
+
+    /* Custom envelope flap styling */
+    .envelope-wrapper {
+      perspective: 1000px;
+    }
+    .envelope-flap {
+      transform-origin: top;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .envelope-flap.open {
+      transform: rotateX(180deg);
+      z-index: 10;
+    }
+
+    /* Custom Scrollbar for the parchment letter */
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(247, 236, 219, 0.5);
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #e2b992;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-rose-100 via-pink-50 to-amber-100 min-h-screen text-slate-700 flex flex-col justify-between relative overflow-x-hidden selection:bg-rose-200 selection:text-rose-800">
+
+  <!-- Background Floating Ambient Elements Container -->
+  <div id="ambient-hearts" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+  <!-- Top Bar: Music Toggle & Stage Indicator -->
+  <header class="w-full max-w-2xl mx-auto px-4 pt-4 pb-2 flex justify-between items-center z-20">
+    <div class="flex items-center space-x-2 bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-sm border border-rose-200/60">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+      <span class="text-xs font-semibold text-rose-600 tracking-wide uppercase" id="stage-badge">Step 1 of 3</span>
+    </div>
+
+    <!-- Soft Audio Toggle Button -->
+    <button id="music-btn" onclick="toggleBgm()" class="flex items-center space-x-2 bg-white/80 hover:bg-white backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-sm border border-rose-200/60 text-xs font-medium text-rose-700 transition transform hover:scale-105 active:scale-95">
+      <span id="music-icon">🎵</span>
+      <span id="music-label">Play Music</span>
+    </button>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 flex items-center justify-center p-4 relative z-10 w-full max-w-xl mx-auto">
+
+    <!-- ================= PAGE 1: The Pouty Apology ================= -->
+    <section id="page-1" class="w-full flex flex-col items-center text-center transition-all duration-500 ease-out">
+      <div class="bg-white/85 backdrop-blur-md border border-rose-100 rounded-3xl p-6 sm:p-8 shadow-xl shadow-rose-200/40 w-full relative">
+        <div class="absolute -top-4 -right-3 text-3xl animate-bounce">✨</div>
+        <div class="absolute -bottom-3 -left-3 text-3xl animate-pulse">🌸</div>
+
+        <!-- Animated SVG: Cute Sad Pouty Bear holding Sorry Board -->
+        <div class="w-48 h-48 mx-auto my-2 animate-gentle flex items-center justify-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+            <!-- Bear Body Base -->
+            <ellipse cx="100" cy="140" rx="48" ry="42" fill="#E8B89B" />
+            <!-- Feet -->
+            <ellipse cx="75" cy="175" rx="16" ry="12" fill="#D99B78" />
+            <ellipse cx="125" cy="175" rx="16" ry="12" fill="#D99B78" />
+            <circle cx="75" cy="175" r="7" fill="#FCE7D8" />
+            <circle cx="125" cy="175" r="7" fill="#FCE7D8" />
+
+            <!-- Ears -->
+            <circle cx="62" cy="62" r="22" fill="#D99B78" />
+            <circle cx="62" cy="62" r="13" fill="#FFCCD5" />
+            <circle cx="138" cy="62" r="22" fill="#D99B78" />
+            <circle cx="138" cy="62" r="13" fill="#FFCCD5" />
+
+            <!-- Head -->
+            <circle cx="100" cy="92" r="46" fill="#E8B89B" />
+            <!-- Cheeks -->
+            <ellipse cx="73" cy="104" rx="9" ry="6" fill="#FFAAA6" opacity="0.8" />
+            <ellipse cx="127" cy="104" rx="9" ry="6" fill="#FFAAA6" opacity="0.8" />
+
+            <!-- Sad Pouty Eyes -->
+            <circle cx="78" cy="85" r="6" fill="#3E2723" />
+            <circle cx="122" cy="85" r="6" fill="#3E2723" />
+            <circle cx="76" cy="83" r="2.2" fill="#FFFFFF" />
+            <circle cx="120" cy="83" r="2.2" fill="#FFFFFF" />
+            <!-- Droopy Eyebrows -->
+            <path d="M70 76 Q78 72 86 77" stroke="#6D4C41" stroke-width="2.5" stroke-linecap="round" fill="none" />
+            <path d="M114 77 Q122 72 130 76" stroke="#6D4C41" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+            <!-- Snout & Pout -->
+            <ellipse cx="100" cy="98" rx="15" ry="11" fill="#FFF2E8" />
+            <ellipse cx="100" cy="94" rx="5" ry="3.5" fill="#5D4037" />
+            <!-- Sad Pout Mouth -->
+            <path d="M94 105 Q100 100 106 105" stroke="#5D4037" stroke-width="2" stroke-linecap="round" fill="none" />
+
+            <!-- Sorry Sign held by paws -->
+            <g transform="translate(42, 118)">
+              <rect x="0" y="0" width="116" height="42" rx="10" fill="#FFF9E6" stroke="#F4A261" stroke-width="2" filter="drop-shadow(0px 3px 4px rgba(0,0,0,0.1))" />
+              <text x="58" y="24" font-family="'Caveat', cursive" font-size="20" font-weight="bold" fill="#E63946" text-anchor="middle">I am So Sorry! 💔</text>
+              <circle cx="14" cy="20" r="2" fill="#E63946" />
+              <circle cx="102" cy="20" r="2" fill="#E63946" />
+            </g>
+            <!-- Paws clutching sign -->
+            <circle cx="50" cy="126" r="10" fill="#D99B78" />
+            <circle cx="150" cy="126" r="10" fill="#D99B78" />
+          </svg>
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-rose-700 mt-2 font-script">
+          Wait Monika... Please don't be mad! 🥺👉👈
+        </h1>
+        <p class="text-slate-600 text-sm sm:text-base mt-2 max-w-sm mx-auto leading-relaxed">
+          I made a silly mistake, and my whole world feels upside down without your smile...
+        </p>
+
+        <div class="mt-7 flex justify-center">
+          <button onclick="goToPage(2)" class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold px-8 py-3.5 rounded-full shadow-lg shadow-rose-400/40 hover:from-rose-600 hover:to-pink-600 hover:scale-105 active:scale-95 transition duration-300">
+            <span>Next... Dekho toh sahi</span>
+            <span class="group-hover:translate-x-1 transition-transform">➡️</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PAGE 2: The Emotional & Funny Crying Teddy ================= -->
+    <section id="page-2" class="w-full flex-col items-center text-center hidden transition-all duration-500 ease-out">
+      <div class="bg-white/85 backdrop-blur-md border border-rose-100 rounded-3xl p-6 sm:p-8 shadow-xl shadow-rose-200/40 w-full relative">
+        
+        <!-- Animated Crying Teddy with Dramatic Tears & 'Kaan Pakad Ke' Pose -->
+        <div class="w-52 h-52 mx-auto relative flex items-center justify-center">
+          <svg viewBox="0 0 200 200" class="w-full h-full drop-shadow-md">
+            <!-- Teddy Body -->
+            <ellipse cx="100" cy="148" rx="46" ry="38" fill="#D4A373" />
+            
+            <!-- Sitting Legs -->
+            <ellipse cx="65" cy="172" rx="17" ry="12" fill="#BC6C25" />
+            <ellipse cx="135" cy="172" rx="17" ry="12" fill="#BC6C25" />
+            <circle cx="65" cy="172" r="7" fill="#FAEDCD" />
+            <circle cx="135" cy="172" r="7" fill="#FAEDCD" />
+
+            <!-- Teddy Head -->
+            <circle cx="100" cy="90" r="44" fill="#D4A373" />
+            
+            <!-- Ears -->
+            <circle cx="58" cy="56" r="18" fill="#BC6C25" />
+            <circle cx="58" cy="56" r="10" fill="#FFCCD5" />
+            <circle cx="142" cy="56" r="18" fill="#BC6C25" />
+            <circle cx="142" cy="56" r="10" fill="#FFCCD5" />
+
+            <!-- Teddy Paws holding ears ('Kaan Pakad Ke Sorry') -->
+            <!-- Left Arm & Paw touching left ear -->
+            <path d="M70 130 C 50 110, 45 80, 56 60" fill="none" stroke="#BC6C25" stroke-width="14" stroke-linecap="round" />
+            <circle cx="56" cy="60" r="10" fill="#D4A373" />
+            
+            <!-- Right Arm & Paw touching right ear -->
+            <path d="M130 130 C 150 110, 155 80, 144 60" fill="none" stroke="#BC6C25" stroke-width="14" stroke-linecap="round" />
+            <circle cx="144" cy="60" r="10" fill="#D4A373" />
+
+            <!-- Blushing cheeks -->
+            <circle cx="75" cy="100" r="8" fill="#FFAAA6" opacity="0.85" />
+            <circle cx="125" cy="100" r="8" fill="#FFAAA6" opacity="0.85" />
+
+            <!-- Eyes Squeezed Crying -->
+            <path d="M72 85 Q80 77 88 85" stroke="#3E2723" stroke-width="3" stroke-linecap="round" fill="none" />
+            <path d="M112 85 Q120 77 128 85" stroke="#3E2723" stroke-width="3" stroke-linecap="round" fill="none" />
+
+            <!-- Snout & Quivering crying mouth -->
+            <ellipse cx="100" cy="98" rx="14" ry="10" fill="#FAEDCD" />
+            <ellipse cx="100" cy="94" rx="4" ry="3" fill="#603808" />
+            <!-- Crying open mouth -->
+            <path d="M94 102 Q100 114 106 102 Z" fill="#D90429" stroke="#603808" stroke-width="1.5" />
+
+            <!-- Big Dramatic Animated Tears -->
+            <!-- Left Streams -->
+            <path class="tear-drop-left" d="M76 88 C72 98, 70 115, 75 125 C80 115, 78 98, 76 88 Z" fill="#48CAE4" />
+            <!-- Right Streams -->
+            <path class="tear-drop-right" d="M124 88 C120 98, 118 115, 123 125 C128 115, 126 98, 124 88 Z" fill="#48CAE4" />
+
+            <!-- Bandage on forehead for extra pity points -->
+            <g transform="translate(90, 56) rotate(15)">
+              <rect x="0" y="0" width="22" height="10" rx="3" fill="#FFE5D9" stroke="#E0AFA0" />
+              <line x1="11" y1="2" x2="11" y2="8" stroke="#D00000" stroke-width="1.5" />
+              <line x1="8" y1="5" x2="14" y2="5" stroke="#D00000" stroke-width="1.5" />
+            </g>
+          </svg>
+        </div>
+
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mt-2 font-script">
+          "Dekho teddy bhi ro raha hai... 😭"
+        </h2>
+        <p class="text-rose-600 font-semibold text-sm sm:text-base mt-1">
+          Kaan pakad kar sorry bol raha hu baba!
+        </p>
+        <p class="text-slate-600 text-xs sm:text-sm mt-1 max-w-md mx-auto">
+          Galti ho gayi na mujhse, ab maaf bhi kardo please? Acha suno... maine tumhare liye ek special secret letter likha hai. Padhogi?
+        </p>
+
+        <!-- Buttons Container -->
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <!-- Main Button to Next Page -->
+          <button onclick="goToPage(3)" class="w-full sm:w-auto bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold px-6 py-3 rounded-full shadow-md shadow-rose-300 hover:from-rose-600 hover:to-pink-600 hover:scale-105 active:scale-95 transition duration-200">
+            Acha theek hai, letter dikhao... 💌
+          </button>
+          <!-- Funny Mischievous Button -->
+          <button id="angry-btn" onmouseover="dodgeAngryBtn()" onclick="dodgeAngryBtn()" class="w-full sm:w-auto bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-medium px-4 py-3 rounded-full border border-slate-300 transition duration-150">
+            Nahi, abhi bhi gussa hu! 😤
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PAGE 3: The Grand Interactive Letter ================= -->
+    <section id="page-3" class="w-full flex-col items-center text-center hidden transition-all duration-500 ease-out">
+      
+      <!-- Envelope View (Before Opening) -->
+      <div id="envelope-container" class="w-full flex flex-col items-center">
+        <p class="text-rose-700 font-script text-2xl font-bold mb-4 animate-bounce">
+          Tap on the heart to open your letter! 💌
+        </p>
+
+        <!-- 3D Realistic Envelope -->
+        <div onclick="openLetter()" class="cursor-pointer group relative w-72 sm:w-84 h-48 bg-rose-200 rounded-2xl shadow-2xl border-4 border-rose-300 flex items-center justify-center transition transform group-hover:scale-105 active:scale-95">
+          <!-- Envelope Back pocket background -->
+          <div class="absolute inset-0 bg-gradient-to-b from-rose-200 to-rose-300 rounded-xl overflow-hidden">
+            <!-- Diagonal shadows inside -->
+            <div class="absolute top-0 left-0 w-0 h-0 border-l-[140px] sm:border-l-[165px] border-l-rose-300/80 border-t-[90px] border-t-transparent border-b-[95px] border-b-rose-300/80"></div>
+            <div class="absolute top-0 right-0 w-0 h-0 border-r-[140px] sm:border-r-[165px] border-r-rose-300/80 border-t-[90px] border-t-transparent border-b-[95px] border-b-rose-300/80"></div>
+          </div>
+
+          <!-- Peeking Letter Paper Preview -->
+          <div class="absolute -top-4 w-56 h-20 bg-amber-50 rounded-t-lg shadow-inner border border-amber-200 flex flex-col items-center pt-2">
+            <span class="text-[11px] font-handwriting text-rose-500 font-bold">Confidential for Monika ❤️</span>
+            <div class="w-36 h-1 bg-amber-200 rounded mt-1"></div>
+            <div class="w-28 h-1 bg-amber-200 rounded mt-1"></div>
+          </div>
+
+          <!-- Glowing Wax Heart Seal -->
+          <div class="z-20 w-16 h-16 rounded-full bg-gradient-to-tr from-rose-600 to-red-500 shadow-xl flex items-center justify-center border-2 border-rose-300 animate-pulse group-hover:scale-110 transition duration-300">
+            <span class="text-2xl">❤️</span>
+          </div>
+
+          <div class="absolute bottom-2 text-xs font-semibold text-rose-700/80">
+            Tap here to open ✨
+          </div>
+        </div>
+      </div>
+
+      <!-- Letter Display (Opens smoothly after envelope click) -->
+      <div id="letter-card" class="hidden w-full max-w-lg bg-[#fffdf9] border-2 border-[#e8d5be] rounded-3xl p-5 sm:p-7 shadow-2xl shadow-rose-300/30 relative text-left transition-all duration-700 scale-95 opacity-0">
+        <!-- Vintage Postcard Header Decor -->
+        <div class="flex justify-between items-start border-b border-rose-100 pb-3 mb-4">
+          <div>
+            <span class="text-xs uppercase tracking-widest font-semibold text-rose-400">Strictly For You</span>
+            <h2 class="text-2xl sm:text-3xl font-script font-bold text-rose-700 leading-tight">My Dearest Monika,</h2>
+          </div>
+          <!-- Vintage Stamp -->
+          <div class="border-2 border-dashed border-rose-300 rounded p-1.5 bg-rose-50/70 text-center flex flex-col items-center">
+            <span class="text-lg">💌</span>
+            <span class="text-[9px] font-bold text-rose-600 uppercase">Sorry Stamp</span>
+          </div>
+        </div>
+
+        <!-- Speed control / Skip typing button -->
+        <div class="flex justify-end mb-2">
+          <button id="skip-typing-btn" onclick="skipTyping()" class="text-xs text-rose-500 hover:text-rose-700 underline font-medium cursor-pointer">
+            Read instantly (Skip typing) ⚡
+          </button>
+        </div>
+
+        <!-- The Animated Letter Body -->
+        <div id="typewriter-box" class="font-handwriting text-slate-800 text-lg sm:text-xl leading-relaxed max-h-[58vh] overflow-y-auto custom-scroll pr-2 whitespace-pre-wrap select-text"></div>
+
+        <!-- Final Apology Accepted Footer (Hidden until letter finished or skipped) -->
+        <div id="letter-footer" class="hidden mt-6 pt-4 border-t border-rose-100 flex-col items-center text-center">
+          <p class="font-script text-xl text-rose-700 font-bold mb-3">
+            Now, are we good? Will you forgive me? 🥺
+          </p>
+          <div class="flex flex-wrap gap-3 justify-center w-full">
+            <button onclick="acceptApology()" class="flex-1 min-w-[140px] bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold text-sm py-3 px-5 rounded-full shadow-lg shadow-emerald-400/30 transition transform hover:scale-105 active:scale-95">
+              Yes, I Forgive You! 🥰
+            </button>
+            <button onclick="acceptApology()" class="flex-1 min-w-[140px] bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold text-sm py-3 px-5 rounded-full shadow-lg shadow-rose-400/30 transition transform hover:scale-105 active:scale-95">
+              A thousand times Yes! ❤️
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Sweet Bottom Quote -->
+  <footer class="w-full text-center py-3 text-xs text-rose-500/80 z-10 font-medium">
+    Crafted with all my heart for Monika ✨
+  </footer>
+
+  <!-- ================= Logic & Sound Engine ================= -->
+  <script>
+    // Exact letter text provided by user
+    const letterContent = `Dear Monika,
+
+Assalamu Alaikum, Beautiful! ❤️
+
+First of all, I would like to file an official apology for disturbing the peace of such a pretty face. 😂
+
+I know we had a little argument, but honestly, I think the universe made a tiny mistake by allowing two perfectly good people to fight over such silly things.
+
+So, let's just pretend that argument never happened, okay?
+
+And now, let's talk about something important...
+Have you ever noticed how some people don't even need to try to look beautiful? They just exist, smile a little, and suddenly the whole atmosphere feels different?
+
+Well, Monika, I think you are one of those people.
+
+I mean, seriously, being this beautiful should probably require a licence. At least give the rest of the world a fair chance! 😂
+
+But jokes apart, you have a lovely personality, a beautiful smile, and a talent for being annoyingly adorable even when you're angry.
+
+And yes, before you ask, I'm admitting my mistake. Not because I'm scared of you...
+Okay, maybe just a little. 😂
+
+But mostly because I'd rather spend my time laughing with you than arguing with you.
+
+So here's my little proposal:
+Let's cancel the unnecessary drama, bring back the silly conversations, the random jokes and the endless teasing.
+Deal?
+
+And one last thing...
+If beauty were a crime, Monika, I'm afraid you'd be serving a life sentence. And I would happily be the lawyer defending you. 😉❤️
+
+Now, can I have my favourite troublemaker back?
+
+With a little apology, a lot of respect, and a smile (hopefully yours),
+Your partner in unnecessary arguments! 😂❤️`;
+
+    let currentStage = 1;
+    let typingIndex = 0;
+    let typingTimer = null;
+    let isTyping = false;
+    let synth = null;
+    let isMusicPlaying = false;
+    let bgmLoop = null;
+
+    // Ambient floating hearts initialization
+    function createAmbientHearts() {
+      const container = document.getElementById('ambient-hearts');
+      const emojis = ['💖', '🌸', '✨', '💕', '🌷', '🤍'];
+      for (let i = 0; i < 16; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (14 + Math.random() * 16) + 'px';
+        heart.style.animationDelay = (Math.random() * 5) + 's';
+        heart.style.animationDuration = (4.5 + Math.random() * 4) + 's';
+        container.appendChild(heart);
+      }
+    }
+    createAmbientHearts();
+
+    // Sound FX & Melodic Chords using Tone.js (No external MP3 files needed)
+    function playChime(note = 'C5') {
+      try {
+        if (!synth) {
+          synth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.05, decay: 0.2, sustain: 0.2, release: 0.8 }
+          }).toDestination();
+          synth.volume.value = -10;
+        }
+        Tone.start();
+        synth.triggerAttackRelease(note, '8n');
+      } catch (e) {
+        console.warn('Audio Context waiting for interaction');
+      }
+    }
+
+    // Toggle Background Soft Romantic Melody
+    function toggleBgm() {
+      const btnLabel = document.getElementById('music-label');
+      const btnIcon = document.getElementById('music-icon');
+
+      if (isMusicPlaying) {
+        if (bgmLoop) bgmLoop.stop();
+        Tone.Transport.stop();
+        isMusicPlaying = false;
+        btnLabel.innerText = 'Play Music';
+        btnIcon.innerText = '🎵';
+      } else {
+        Tone.start().then(() => {
+          if (!synth) {
+            synth = new Tone.PolySynth(Tone.Synth, {
+              oscillator: { type: 'sine' },
+              envelope: { attack: 0.08, decay: 0.3, sustain: 0.4, release: 1.2 }
+            }).toDestination();
+            synth.volume.value = -12;
+          }
+
+          const melody = [
+            { time: '0:0', notes: ['F4', 'A4', 'C5'] },
+            { time: '0:2', notes: ['G4', 'B4', 'D5'] },
+            { time: '1:0', notes: ['E4', 'G4', 'C5'] },
+            { time: '1:2', notes: ['A4', 'C5', 'E5'] }
+          ];
+
+          bgmLoop = new Tone.Part((time, value) => {
+            synth.triggerAttackRelease(value.notes, '4n', time);
+          }, melody).start(0);
+
+          bgmLoop.loop = true;
+          bgmLoop.loopEnd = '2m';
+          Tone.Transport.bpm.value = 68;
+          Tone.Transport.start();
+
+          isMusicPlaying = true;
+          btnLabel.innerText = 'Mute Melody';
+          btnIcon.innerText = '🔊';
+        }).catch(err => console.log('BGM error:', err));
+      }
+    }
+
+    // Page Navigation
+    function goToPage(pageNumber) {
+      playChime('E5');
+
+      const p1 = document.getElementById('page-1');
+      const p2 = document.getElementById('page-2');
+      const p3 = document.getElementById('page-3');
+      const badge = document.getElementById('stage-badge');
+
+      [p1, p2, p3].forEach(p => {
+        p.classList.add('hidden');
+        p.classList.remove('flex');
+      });
+
+      if (pageNumber === 1) {
+        p1.classList.remove('hidden');
+        p1.classList.add('flex');
+        badge.innerText = 'Step 1 of 3';
+      } else if (pageNumber === 2) {
+        p2.classList.remove('hidden');
+        p2.classList.add('flex');
+        badge.innerText = 'Step 2 of 3';
+      } else if (pageNumber === 3) {
+        p3.classList.remove('hidden');
+        p3.classList.add('flex');
+        badge.innerText = 'Final Step: Letter 💌';
+      }
+      currentStage = pageNumber;
+    }
+
+    // Funny playful button on Page 2 that dodges on hover/click
+    function dodgeAngryBtn() {
+      const btn = document.getElementById('angry-btn');
+      const randomX = (Math.random() - 0.5) * 180;
+      const randomY = (Math.random() - 0.5) * 80;
+      btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+      
+      const funnyQuotes = [
+        "Arey aise mat karo! 😂",
+        "Itna gussa sehat ke liye theek nahi! 😜",
+        "Kaan pakad toh liye! 🥺",
+        "Bas bas maaf kardo! ❤️",
+        "Ek chance toh banta hai! ✨"
+      ];
+      btn.innerText = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
+      playChime('A4');
+    }
+
+    // Envelope Opening & Typewriter Trigger
+    function openLetter() {
+      playChime('C6');
+      
+      // Little heart/confetti burst
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff758f', '#ff4d6d', '#ffb3c1', '#ffffff']
+      });
+
+      const env = document.getElementById('envelope-container');
+      const letter = document.getElementById('letter-card');
+
+      env.classList.add('transition-all', 'duration-500', 'opacity-0', 'scale-90');
+      setTimeout(() => {
+        env.classList.add('hidden');
+        letter.classList.remove('hidden');
+        // trigger fade-in scale
+        setTimeout(() => {
+          letter.classList.remove('scale-95', 'opacity-0');
+          letter.classList.add('scale-100', 'opacity-100');
+          startTypewriter();
+        }, 50);
+      }, 400);
+    }
+
+    // Smooth Typewriter Effect for the Letter
+    function startTypewriter() {
+      const box = document.getElementById('typewriter-box');
+      box.innerHTML = '';
+      typingIndex = 0;
+      isTyping = true;
+
+      function typeNextChar() {
+        if (!isTyping) return;
+
+        if (typingIndex < letterContent.length) {
+          const char = letterContent.charAt(typingIndex);
+          box.textContent += char;
+          typingIndex++;
+          box.scrollTop = box.scrollHeight;
+
+          // Natural typing pacing: slower on punctuation
+          let speed = 25;
+          if (char === '.' || char === '!' || char === '?') speed = 250;
+          else if (char === '\n') speed = 120;
+          else if (char === ',') speed = 80;
+
+          typingTimer = setTimeout(typeNextChar, speed);
+        } else {
+          finishTyping();
+        }
+      }
+      typeNextChar();
+    }
+
+    // Skip typing function for instant read
+    function skipTyping() {
+      clearTimeout(typingTimer);
+      isTyping = false;
+      const box = document.getElementById('typewriter-box');
+      box.textContent = letterContent;
+      finishTyping();
+    }
+
+    function finishTyping() {
+      isTyping = false;
+      document.getElementById('skip-typing-btn').style.display = 'none';
+      const footer = document.getElementById('letter-footer');
+      footer.classList.remove('hidden');
+      footer.classList.add('flex');
+      
+      // Gentle celebratory mini burst
+      confetti({
+        particleCount: 30,
+        spread: 60,
+        origin: { y: 0.8 },
+        colors: ['#f472b6', '#fb7185', '#fda4af']
+      });
+    }
+
+    // Final Apology Acceptance Celebration
+    function acceptApology() {
+      playChime('C6');
+
+      // Grand celebration fireworks confetti
+      const end = Date.now() + 2.5 * 1000;
+      const colors = ['#ec4899', '#f43f5e', '#a855f7', '#fbbf24', '#ffffff'];
+
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+
+      // Update footer message
+      const footer = document.getElementById('letter-footer');
+      footer.innerHTML = `
+        <div class="bg-rose-50 border border-rose-200 rounded-2xl p-4 w-full text-center animate-bounce">
+          <p class="text-3xl mb-1">🎉🥰❤️</p>
+          <h3 class="font-script text-2xl font-bold text-rose-700">Yay! Deal locked forever!</h3>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">Unnecessary drama officially cancelled. Silly conversations are officially back! 🥂</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
